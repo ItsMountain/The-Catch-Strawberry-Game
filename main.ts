@@ -2,7 +2,7 @@ namespace SpriteKind {
     export const Score = SpriteKind.create()
 }
 controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
-    game.showLongText("Your high score is " + info.highScore(), DialogLayout.Bottom)
+    game.showLongText("Your high score is " + info.highScore() + " and played for " + game.runtime() / 1000, DialogLayout.Bottom)
 })
 controller.anyButton.onEvent(ControllerButtonEvent.Pressed, function () {
     start = 1
@@ -67,8 +67,27 @@ mySprite3 = sprites.create(img`
 `, SpriteKind.Enemy)
 mySprite2.setPosition(20, 56)
 mySprite3.setPosition(142, 93)
-scene.setBackgroundColor(12)
 start = 0
+scene.setBackgroundColor(6)
+forever(function () {
+    if (mySprite.isHittingTile(CollisionDirection.Left)) {
+        mySprite.x += 25
+    }
+    if (mySprite.isHittingTile(CollisionDirection.Right)) {
+        mySprite.x += -25
+    }
+    if (mySprite.isHittingTile(CollisionDirection.Bottom)) {
+        mySprite.y += -25
+    }
+    if (mySprite.isHittingTile(CollisionDirection.Top)) {
+        mySprite.y += 25
+    }
+})
+forever(function () {
+    if (mySprite2.overlapsWith(mySprite3)) {
+        game.over(false, effects.melt)
+    }
+})
 forever(function () {
     if (mySprite2.isHittingTile(CollisionDirection.Left)) {
         mySprite2.setPosition(78, 57)
@@ -103,24 +122,5 @@ forever(function () {
 forever(function () {
     if (start == 1) {
         controller.moveSprite(mySprite2)
-    }
-})
-forever(function () {
-    if (mySprite.isHittingTile(CollisionDirection.Left)) {
-        mySprite.x += 25
-    }
-    if (mySprite.isHittingTile(CollisionDirection.Right)) {
-        mySprite.x += -25
-    }
-    if (mySprite.isHittingTile(CollisionDirection.Bottom)) {
-        mySprite.y += -25
-    }
-    if (mySprite.isHittingTile(CollisionDirection.Top)) {
-        mySprite.y += 25
-    }
-})
-forever(function () {
-    if (mySprite2.overlapsWith(mySprite3)) {
-        game.over(false, effects.melt)
     }
 })
