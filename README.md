@@ -1,4 +1,4 @@
-# the-catch-apple-game ![Build status badge](https://github.com/mountain-game/the-catch-apple-game/workflows/MakeCode/badge.svg)
+# the-catch-strawberry-game ![Build status badge](https://github.com/mountain-game/the-catch-apple-game/workflows/MakeCode/badge.svg)
 
 
 
