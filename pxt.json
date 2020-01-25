@@ -3,7 +3,8 @@
     "dependencies": {
         "device": "*",
         "sevenseg": "*",
-        "animation": "*"
+        "animation": "*",
+        "pxt-button-combos": "github:jwunderl/pxt-button-combos#v0.0.23"
     },
     "description": "",
     "files": [
@@ -11,7 +12,7 @@
         "main.ts",
         "README.md"
     ],
-    "preferredEditor": "tsprj",
+    "preferredEditor": "blocksprj",
     "testFiles": [
         "test.ts"
     ],
