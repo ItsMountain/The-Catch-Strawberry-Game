@@ -4,7 +4,13 @@ namespace SpriteKind {
 controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
     game.showLongText("Your high score is " + info.highScore(), DialogLayout.Bottom)
 })
-let Name = game.askForString("What's your name?", 10)
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    start = 1
+    mySprite3.follow(mySprite2, 25)
+})
+let start = 0
+let mySprite3: Sprite = null
+let mySprite2: Sprite = null
 let mySprite = sprites.create(img`
     . . . . . . . 6 . . . . . . . .
     . . . . . . 8 6 6 . . . 6 8 . .
@@ -23,7 +29,7 @@ let mySprite = sprites.create(img`
     e e e 2 e e c e c c c . . . . .
     . c c c c c c c . . . . . . . .
 `, SpriteKind.Food)
-let mySprite2 = sprites.create(img`
+mySprite2 = sprites.create(img`
     . . . . . . . . . . . . . . . .
     . . . . . . 6 6 6 6 6 6 6 6 . .
     . . . . . 6 c 6 6 6 6 6 6 9 6 .
@@ -41,7 +47,7 @@ let mySprite2 = sprites.create(img`
     . . . . f f f f . . . . f f f .
     . . . . . . . . . . . . . . . .
 `, SpriteKind.Player)
-let mySprite3 = sprites.create(img`
+mySprite3 = sprites.create(img`
     . . . . . . . . . . . . . . . .
     . . . . . . 2 2 2 2 2 2 2 2 . .
     . . . . . 2 c 2 2 2 2 2 2 4 2 .
@@ -62,26 +68,7 @@ let mySprite3 = sprites.create(img`
 mySprite2.setPosition(20, 56)
 mySprite3.setPosition(142, 93)
 scene.setBackgroundColor(12)
-mySprite3.follow(mySprite2, 25)
-forever(function () {
-    if (mySprite2.overlapsWith(mySprite3)) {
-        game.over(false, effects.melt)
-    }
-})
-forever(function () {
-    if (mySprite2.isHittingTile(CollisionDirection.Left)) {
-        mySprite2.setPosition(78, 57)
-    }
-    if (mySprite2.isHittingTile(CollisionDirection.Right)) {
-        mySprite2.setPosition(78, 57)
-    }
-    if (mySprite2.isHittingTile(CollisionDirection.Bottom)) {
-        mySprite2.setPosition(78, 57)
-    }
-    if (mySprite2.isHittingTile(CollisionDirection.Top)) {
-        mySprite2.setPosition(78, 57)
-    }
-})
+start = 0
 forever(function () {
     if (mySprite.overlapsWith(mySprite2)) {
         info.changeScoreBy(1)
@@ -100,7 +87,9 @@ forever(function () {
     mySprite.y += 25
 })
 forever(function () {
-    controller.moveSprite(mySprite2)
+    if (start == 1) {
+        controller.moveSprite(mySprite2)
+    }
 })
 forever(function () {
     if (mySprite.isHittingTile(CollisionDirection.Left)) {
@@ -114,5 +103,24 @@ forever(function () {
     }
     if (mySprite.isHittingTile(CollisionDirection.Top)) {
         mySprite.y += 25
+    }
+})
+forever(function () {
+    if (mySprite2.overlapsWith(mySprite3)) {
+        game.over(false, effects.melt)
+    }
+})
+forever(function () {
+    if (mySprite2.isHittingTile(CollisionDirection.Left)) {
+        mySprite2.setPosition(78, 57)
+    }
+    if (mySprite2.isHittingTile(CollisionDirection.Right)) {
+        mySprite2.setPosition(78, 57)
+    }
+    if (mySprite2.isHittingTile(CollisionDirection.Bottom)) {
+        mySprite2.setPosition(78, 57)
+    }
+    if (mySprite2.isHittingTile(CollisionDirection.Top)) {
+        mySprite2.setPosition(78, 57)
     }
 })
