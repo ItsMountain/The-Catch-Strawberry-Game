@@ -3,7 +3,7 @@ namespace SpriteKind {
     export const Bonus = SpriteKind.create()
 }
 controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
-    game.showLongText("Your high score is " + info.highScore() + " and played for " + game.runtime() / 1000 + " seconds." + " Version 1.2.1", DialogLayout.Bottom)
+    game.showLongText("Your high score is " + info.highScore() + " and played for " + game.runtime() / 1000 + " seconds." + " Version 1.3.3", DialogLayout.Bottom)
 })
 controller.anyButton.onEvent(ControllerButtonEvent.Pressed, function () {
     start = 1
@@ -71,6 +71,19 @@ mySprite3.setPosition(142, 93)
 start = 0
 scene.setBackgroundColor(6)
 forever(function () {
+    pause(2000)
+    mySprite.x += 25
+    mySprite.y += -25
+    pause(2000)
+    mySprite.x += -25
+    mySprite.y += 25
+})
+forever(function () {
+    if (start == 1) {
+        controller.moveSprite(mySprite2)
+    }
+})
+forever(function () {
     if (mySprite.isHittingTile(CollisionDirection.Left)) {
         mySprite.x += 25
     }
@@ -113,18 +126,5 @@ forever(function () {
         mySprite.y = Math.randomRange(5, 100)
         mySprite2.setPosition(mySprite.x - 55, mySprite.y - 55)
         mySprite3.setPosition(mySprite.x + 55, mySprite.y + 55)
-    }
-})
-forever(function () {
-    pause(2000)
-    mySprite.x += 25
-    mySprite.y += -25
-    pause(2000)
-    mySprite.x += -25
-    mySprite.y += 25
-})
-forever(function () {
-    if (start == 1) {
-        controller.moveSprite(mySprite2)
     }
 })
