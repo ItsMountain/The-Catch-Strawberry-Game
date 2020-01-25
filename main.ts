@@ -38,14 +38,49 @@ let mySprite2 = sprites.create(img`
 . . . . f f f f . . . . f f f . 
 . . . . . . . . . . . . . . . . 
 `, SpriteKind.Player)
+let mySprite3 = sprites.create(img`
+. . . . . . . . . . . . . . . . 
+. . . . . . 2 2 2 2 2 2 2 2 . . 
+. . . . . 2 c 2 2 2 2 2 2 4 2 . 
+. . . . 2 c c 2 2 2 2 2 2 4 c 2 
+. . d 2 4 c c 2 4 4 4 4 4 4 c c 
+. d 2 2 4 c b e e e e e e e 2 c 
+. 2 2 2 4 b e e b b b e b b e 2 
+. 2 2 2 2 2 e b b b b e b b b e 
+. 2 2 2 2 e 2 2 2 2 2 e 2 2 2 e 
+. 2 d d 2 e f e e e f e e e e e 
+. d d 2 e e e f e e f e e e e e 
+. e e e e e e e f f f e e e e e 
+. e e e e f f f e e e e f f f f 
+. . . e f f f f f e e f f f f f 
+. . . . f f f f . . . . f f f . 
+. . . . . . . . . . . . . . . . 
+`, SpriteKind.Enemy)
 mySprite2.setPosition(20, 56)
+mySprite3.setPosition(142, 93)
 scene.setBackgroundColor(12)
+mySprite3.follow(mySprite2, 25)
+forever(function () {
+    if (mySprite2.isHittingTile(CollisionDirection.Left)) {
+        mySprite2.x += 25
+    }
+    if (mySprite2.isHittingTile(CollisionDirection.Right)) {
+        mySprite2.x += -25
+    }
+    if (mySprite2.isHittingTile(CollisionDirection.Bottom)) {
+        mySprite2.y += -25
+    }
+    if (mySprite2.isHittingTile(CollisionDirection.Top)) {
+        mySprite2.y += 25
+    }
+})
 forever(function () {
     if (mySprite.overlapsWith(mySprite2)) {
         info.changeScoreBy(1)
         mySprite.x = Math.randomRange(5, 100)
         mySprite.y = Math.randomRange(5, 100)
         mySprite2.setPosition(20, 56)
+        mySprite3.setPosition(142, 93)
     }
 })
 forever(function () {
@@ -74,16 +109,7 @@ forever(function () {
     }
 })
 forever(function () {
-    if (mySprite2.isHittingTile(CollisionDirection.Left)) {
-        mySprite2.x += 25
-    }
-    if (mySprite2.isHittingTile(CollisionDirection.Right)) {
-        mySprite2.x += -25
-    }
-    if (mySprite2.isHittingTile(CollisionDirection.Bottom)) {
-        mySprite2.y += -25
-    }
-    if (mySprite2.isHittingTile(CollisionDirection.Top)) {
-        mySprite2.y += 25
+    if (mySprite2.overlapsWith(mySprite3)) {
+        game.over(false, effects.melt)
     }
 })
