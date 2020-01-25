@@ -3,7 +3,7 @@ namespace SpriteKind {
     export const Bonus = SpriteKind.create()
 }
 controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
-    game.showLongText("Your high score is " + info.highScore() + " and played for " + game.runtime() / 1000, DialogLayout.Bottom)
+    game.showLongText("Your high score is " + info.highScore() + " and played for " + game.runtime() / 1000 + " seconds." + " Version 1.3.2", DialogLayout.Bottom)
 })
 controller.anyButton.onEvent(ControllerButtonEvent.Pressed, function () {
     start = 1
