@@ -9,6 +9,9 @@ controller.anyButton.onEvent(ControllerButtonEvent.Pressed, function () {
     start = 1
     mySprite3.follow(mySprite2, 32)
 })
+info.onLifeZero(function () {
+    game.over(false, effects.melt)
+})
 let start = 0
 let mySprite3: Sprite = null
 let mySprite2: Sprite = null
@@ -69,20 +72,8 @@ mySprite3 = sprites.create(img`
 mySprite2.setPosition(20, 56)
 mySprite3.setPosition(142, 93)
 start = 0
+info.setLife(3)
 scene.setBackgroundColor(6)
-forever(function () {
-    pause(2000)
-    mySprite.x += 25
-    mySprite.y += -25
-    pause(2000)
-    mySprite.x += -25
-    mySprite.y += 25
-})
-forever(function () {
-    if (start == 1) {
-        controller.moveSprite(mySprite2)
-    }
-})
 forever(function () {
     if (mySprite.isHittingTile(CollisionDirection.Left)) {
         mySprite.x += 25
@@ -99,7 +90,7 @@ forever(function () {
 })
 forever(function () {
     if (mySprite2.overlapsWith(mySprite3)) {
-        game.over(false, effects.melt)
+        info.changeLifeBy(-1)
     }
 })
 forever(function () {
@@ -126,5 +117,18 @@ forever(function () {
         mySprite.y = Math.randomRange(5, 100)
         mySprite2.setPosition(mySprite.x - 55, mySprite.y - 55)
         mySprite3.setPosition(mySprite.x + 55, mySprite.y + 55)
+    }
+})
+forever(function () {
+    pause(2000)
+    mySprite.x += 25
+    mySprite.y += -25
+    pause(2000)
+    mySprite.x += -25
+    mySprite.y += 25
+})
+forever(function () {
+    if (start == 1) {
+        controller.moveSprite(mySprite2)
     }
 })
