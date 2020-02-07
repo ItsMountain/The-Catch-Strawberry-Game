@@ -9,9 +9,6 @@ controller.anyButton.onEvent(ControllerButtonEvent.Pressed, function () {
     start = 1
     mySprite3.follow(mySprite2, 32)
 })
-info.onLifeZero(function () {
-    game.over(false, effects.melt)
-})
 let start = 0
 let mySprite3: Sprite = null
 let mySprite2: Sprite = null
@@ -69,29 +66,29 @@ mySprite3 = sprites.create(img`
     . . . . f f f f . . . . f f f .
     . . . . . . . . . . . . . . . .
 `, SpriteKind.Enemy)
+let mySprite4 = sprites.create(img`
+    . . . . . . . . . . . . . . . .
+    . . . . 2 2 2 2 2 2 2 2 . . . .
+    . . . 2 4 2 2 2 2 2 2 c 2 . . .
+    . . 2 c 4 2 2 2 2 2 2 c c 2 . .
+    . 2 c c 4 4 4 4 4 4 2 c c 4 2 d
+    . 2 c 2 e e e e e e e b c 4 2 2
+    . 2 2 e b b e b b b e e b 4 2 2
+    . 2 e b b b e b b b b e 2 2 2 2
+    . e e 2 2 2 e 2 2 2 2 2 e 2 2 2
+    . e e e e e e f e e e f e 2 d d
+    . e e e e e e f e e f e e e 2 d
+    . e e e e e e f f f e e e e e e
+    . e f f f f e e e e f f f e e e
+    . . f f f f f e e f f f f f e .
+    . . . f f f . . . . f f f f . .
+    . . . . . . . . . . . . . . . .
+`, SpriteKind.Enemy)
 mySprite2.setPosition(20, 56)
 mySprite3.setPosition(142, 93)
 start = 0
+let level = 1
 scene.setBackgroundColor(6)
-forever(function () {
-    if (mySprite.isHittingTile(CollisionDirection.Left)) {
-        mySprite.x += 25
-    }
-    if (mySprite.isHittingTile(CollisionDirection.Right)) {
-        mySprite.x += -25
-    }
-    if (mySprite.isHittingTile(CollisionDirection.Bottom)) {
-        mySprite.y += -25
-    }
-    if (mySprite.isHittingTile(CollisionDirection.Top)) {
-        mySprite.y += 25
-    }
-})
-forever(function () {
-    if (mySprite2.overlapsWith(mySprite3)) {
-        info.changeLifeBy(-1)
-    }
-})
 forever(function () {
     if (mySprite2.isHittingTile(CollisionDirection.Left)) {
         mySprite2.setPosition(78, 57)
@@ -127,7 +124,41 @@ forever(function () {
     mySprite.y += 25
 })
 forever(function () {
+    if (level == 1) {
+        mySprite4.setFlag(SpriteFlag.Invisible, true)
+    } else {
+        mySprite4.setFlag(SpriteFlag.Invisible, false)
+        mySprite4.follow(mySprite2, 45)
+    }
+})
+forever(function () {
     if (start == 1) {
         controller.moveSprite(mySprite2)
+    }
+})
+forever(function () {
+    if (0 >= 50) {
+        level = 2
+    } else {
+        level = 1
+    }
+})
+forever(function () {
+    if (mySprite.isHittingTile(CollisionDirection.Left)) {
+        mySprite.x += 25
+    }
+    if (mySprite.isHittingTile(CollisionDirection.Right)) {
+        mySprite.x += -25
+    }
+    if (mySprite.isHittingTile(CollisionDirection.Bottom)) {
+        mySprite.y += -25
+    }
+    if (mySprite.isHittingTile(CollisionDirection.Top)) {
+        mySprite.y += 25
+    }
+})
+forever(function () {
+    if (mySprite2.overlapsWith(mySprite3)) {
+        game.over(false, effects.melt)
     }
 })
