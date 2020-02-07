@@ -3,12 +3,18 @@ namespace SpriteKind {
     export const Bonus = SpriteKind.create()
 }
 controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
-    game.showLongText("Your high score is " + info.highScore() + " and played for " + game.runtime() / 1000 + " seconds.", DialogLayout.Bottom)
+    if (timePlayedUnit == 0) {
+        game.showLongText("Your high score is " + info.highScore() + " and played for " + timePlayed + " seconds.", DialogLayout.Bottom)
+    } else {
+        game.showLongText("Your high score is " + info.highScore() + " and played for " + timePlayed + " minutes.", DialogLayout.Bottom)
+    }
 })
 controller.anyButton.onEvent(ControllerButtonEvent.Pressed, function () {
     start = 1
     mySprite3.follow(mySprite2, 32)
 })
+let timePlayed = 0
+let timePlayedUnit = 0
 let start = 0
 let mySprite3: Sprite = null
 let mySprite2: Sprite = null
@@ -90,48 +96,6 @@ start = 0
 let level = 1
 scene.setBackgroundColor(6)
 forever(function () {
-    if (mySprite2.isHittingTile(CollisionDirection.Left)) {
-        mySprite2.setPosition(78, 57)
-    }
-    if (mySprite2.isHittingTile(CollisionDirection.Right)) {
-        mySprite2.setPosition(78, 57)
-    }
-    if (mySprite2.isHittingTile(CollisionDirection.Bottom)) {
-        mySprite2.setPosition(78, 57)
-    }
-    if (mySprite2.isHittingTile(CollisionDirection.Top)) {
-        mySprite2.setPosition(78, 57)
-    }
-})
-forever(function () {
-    scene.cameraFollowSprite(mySprite2)
-})
-forever(function () {
-    if (mySprite.overlapsWith(mySprite2)) {
-        info.changeScoreBy(1)
-        mySprite.x = Math.randomRange(5, 100)
-        mySprite.y = Math.randomRange(5, 100)
-        mySprite2.setPosition(mySprite.x - 55, mySprite.y - 55)
-        mySprite3.setPosition(mySprite.x + 55, mySprite.y + 55)
-    }
-})
-forever(function () {
-    pause(2000)
-    mySprite.x += 25
-    mySprite.y += -25
-    pause(2000)
-    mySprite.x += -25
-    mySprite.y += 25
-})
-forever(function () {
-    if (level == 1) {
-        mySprite4.setFlag(SpriteFlag.Invisible, true)
-    } else {
-        mySprite4.setFlag(SpriteFlag.Invisible, false)
-        mySprite4.follow(mySprite2, 45)
-    }
-})
-forever(function () {
     if (start == 1) {
         controller.moveSprite(mySprite2)
     }
@@ -160,5 +124,56 @@ forever(function () {
 forever(function () {
     if (mySprite2.overlapsWith(mySprite3)) {
         game.over(false, effects.melt)
+    }
+})
+forever(function () {
+    if (mySprite2.isHittingTile(CollisionDirection.Left)) {
+        mySprite2.setPosition(78, 57)
+    }
+    if (mySprite2.isHittingTile(CollisionDirection.Right)) {
+        mySprite2.setPosition(78, 57)
+    }
+    if (mySprite2.isHittingTile(CollisionDirection.Bottom)) {
+        mySprite2.setPosition(78, 57)
+    }
+    if (mySprite2.isHittingTile(CollisionDirection.Top)) {
+        mySprite2.setPosition(78, 57)
+    }
+})
+forever(function () {
+    scene.cameraFollowSprite(mySprite2)
+})
+forever(function () {
+    if (mySprite.overlapsWith(mySprite2)) {
+        info.changeScoreBy(1)
+        mySprite.x = Math.randomRange(5, 100)
+        mySprite.y = Math.randomRange(5, 100)
+        mySprite2.setPosition(mySprite.x - 55, mySprite.y - 55)
+        mySprite3.setPosition(mySprite.x + 55, mySprite.y + 55)
+    }
+})
+forever(function () {
+    if (game.runtime() / 1000 > 59) {
+        timePlayed = game.runtime() / 60000
+        timePlayedUnit = 1
+    } else {
+        timePlayed = game.runtime() / 1000
+        timePlayedUnit = 0
+    }
+})
+forever(function () {
+    pause(2000)
+    mySprite.x += 25
+    mySprite.y += -25
+    pause(2000)
+    mySprite.x += -25
+    mySprite.y += 25
+})
+forever(function () {
+    if (level == 1) {
+        mySprite4.setFlag(SpriteFlag.Invisible, true)
+    } else {
+        mySprite4.setFlag(SpriteFlag.Invisible, false)
+        mySprite4.follow(mySprite2, 45)
     }
 })
