@@ -72,7 +72,6 @@ mySprite3 = sprites.create(img`
 mySprite2.setPosition(20, 56)
 mySprite3.setPosition(142, 93)
 start = 0
-info.setLife(3)
 scene.setBackgroundColor(6)
 forever(function () {
     if (mySprite.isHittingTile(CollisionDirection.Left)) {
